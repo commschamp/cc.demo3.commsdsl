@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema name="demo3" endian="big" version="5">
+    <fields>
+        <enum name="MsgId" type="uint8" semanticType="messageId" >
+            <validValue name="Connect" val="1" />
+            <validValue name="Msg1" val="2" />
+        </enum>
+    </fields>
+
+    <interface name="Message">
+        <int name="Version" type="uint8" semanticType="version" />
+    </interface>
+    
+    <frame name="Frame">
+        <sync name="Sync">
+            <int name="Sync" type="uint16" defaultValue="0xabcd" validValue="0xabcd" failOnInvalid="true"/>
+        </sync>
+        <size name="Size">
+            <int name="Size" type="uint16" serOffset="2" displayOffset="2"/>
+        </size>
+        <id name="Id" field="MsgId" />
+        <value name="Version" interfaces="Message" interfaceFieldName="Version" pseudo="true">
+            <int name="Version" type="uint8" />
+        </value>
+        <payload name="Data" />
+        <checksum name="Checksum" alg="crc-ccitt" from="Size">
+            <int name="Checksum" type="uint16" />
+        </checksum>
+    </frame>       
+
+    <message name="Connect" id="MsgId.Connect" sender="client">
+        <int name="Version" type="uint8" semanticType="version"/>
+    </message>
+    
+    <message name="Msg1" id="MsgId.Msg1" sender="client">
+        <int name="F1" type="uint8" defaultValue="1" />
+        <int name="F2" type="uint8" defaultValue="2" deprecated="2" removed="true" />
+        <int name="F3" type="uint8" defaultValue="3" sinceVersion="3" deprecated="4" />
+        <int name="F4" type="uint8" defaultValue="4" sinceVersion="3" deprecated="5" removed="true" />
+    </message>
+</schema>
