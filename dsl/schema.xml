@@ -20,7 +20,7 @@
         </size>
         <id name="Id" field="MsgId" />
         <value name="Version" interfaces="Message" interfaceFieldName="Version" pseudo="true">
-            <int name="Version" type="uint8" />
+            <int name="Version" type="uint8" semanticType="version"/>
         </value>
         <payload name="Data" />
         <checksum name="Checksum" alg="crc-ccitt" from="Size">
