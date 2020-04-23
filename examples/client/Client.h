@@ -5,8 +5,9 @@
 #include <iterator>
 #include <vector>
 
-#include <boost/asio.hpp>
 #include <boost/array.hpp>
+
+#include "common/boost_wrap.h"
 
 #include "demo3/Message.h"
 #include "demo3/input/ClientInputMessages.h"
@@ -21,7 +22,7 @@ namespace client
 class Client
 {
 public:
-    Client(boost::asio::io_service& io, const std::string& server, std::uint16_t port);
+    Client(common::boost_wrap::io& io, const std::string& server, std::uint16_t port);
 
     bool start();
 
@@ -57,6 +58,7 @@ private:
     void sendMessage(const OutputMsg& msg);
     void processInput();
 
+    common::boost_wrap::io& m_io;
     Socket m_socket;
     std::string m_server;
     std::uint16_t m_port = 0U;
