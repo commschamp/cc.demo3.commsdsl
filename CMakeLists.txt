@@ -17,20 +17,26 @@ option (DEMO3_NO_WARN_AS_ERR "Don't treat compilation warnings as errors." OFF)
 #     is not provided and examples are not disabled.
 
 if ("${COMMSDSL_TAG}" STREQUAL "")
-    set(COMMSDSL_TAG "v3.4.2")
+    set(COMMSDSL_TAG "develop")
 endif ()
 
 if ("${COMMS_TAG}" STREQUAL "")
-    set(COMMS_TAG "v2.4.1")
+    set(COMMS_TAG "develop")
 endif ()
 
-set (VERSION "0.17.1")
+set (VERSION "0.18")
+
+set (EXTERNALS_DIR "${PROJECT_SOURCE_DIR}/externals")
 
 set (COMMSDSL_TGT "commsdsl_tgt")
 if ("${COMMSDSL2COMMS}" STREQUAL "")
+        execute_process (
+            COMMAND ${CMAKE_COMMAND} -E make_directory "${EXTERNALS_DIR}"
+        )   
+        
         include(ExternalProject)
-        set (commsdsl2comms_main_dir "${CMAKE_BINARY_DIR}/commsdsl")
-        set (commsdsl2comms_src_dir "${commsdsl2comms_main_dir}/src")
+        set (commsdsl2comms_main_dir "${PROJECT_BINARY_DIR}/commsdsl")
+        set (commsdsl2comms_src_dir "${EXTERNALS_DIR}/commsdsl")
         set (commsdsl2comms_bin_dir "${commsdsl2comms_main_dir}/build")
         set (commsdsl2comms_install_dir "${commsdsl2comms_main_dir}/install")
         
@@ -63,14 +69,11 @@ endif ()
 
 set (schema_file "${CMAKE_SOURCE_DIR}/dsl/schema.xml")
 set (tmp_dir "${CMAKE_BINARY_DIR}/output.tmp")
-#set (code_input_dir "${CMAKE_SOURCE_DIR}/src")
 
 if ("${OUTPUT_DIR}" STREQUAL "")
     set (OUTPUT_DIR "${CMAKE_BINARY_DIR}/output")
 endif ()
 
-
-#file (GLOB_RECURSE src_files ${code_input_dir})
 
 set (extra_dep)
 if (TARGET ${COMMSDSL_TGT})
