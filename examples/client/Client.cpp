@@ -24,7 +24,7 @@ void printVersionDependentField(const TField& f)
         std::cout << "(missing)";
     }
     else {
-        std::cout << (unsigned)f.field().value();
+        std::cout << static_cast<unsigned>(f.field().value());
     }
     std::cout << '\n';
 }    
@@ -135,14 +135,14 @@ void Client::readDataFromStdin()
 void Client::sendConnect()
 {
     demo3::message::Connect<OutputMsg> msg;
-    msg.field_version().value() = m_sentVersion;
+    comms::cast_assign(msg.field_version().value()) = m_sentVersion;
     sendMessage(msg);
 }
 
 void Client::sendMsg1()
 {
     demo3::message::Msg1<OutputMsg> msg;
-    msg.transportField_version().value() = m_sentVersion;
+    comms::cast_assign(msg.transportField_version().value()) = m_sentVersion;
     msg.doRefresh();
     sendMessage(msg);
 }
@@ -159,7 +159,9 @@ void Client::sendMessage(const OutputMsg& msg)
     }
 
     if (es != comms::ErrorStatus::Success) {
-        assert(!"Unexpected error");
+        static constexpr bool Unexpected_error = false;
+        static_cast<void>(Unexpected_error);
+        assert(Unexpected_error);
         return;
     }
 
