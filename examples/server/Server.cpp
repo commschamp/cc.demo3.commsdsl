@@ -76,7 +76,9 @@ void Server::acceptNewConnection()
                             });
 
                     if (iter == m_sessions.end()) {
-                        assert(!"Should not happen");
+                        static constexpr bool Unexpected_error = false;
+                        static_cast<void>(Unexpected_error);
+                        assert(Unexpected_error);
                         return;
                     }
 
