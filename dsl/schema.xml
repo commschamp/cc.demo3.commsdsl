@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema name="demo3" endian="big" version="5">
+<schema name="demo3" endian="big" version="5" dslVersion="5">
     <fields>
         <enum name="MsgId" type="uint8" semanticType="messageId" >
             <validValue name="Connect" val="1" />
