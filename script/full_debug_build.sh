@@ -18,7 +18,7 @@ ${SCRIPT_DIR}/prepare_externals.sh
 cd ${BUILD_DIR}
 cmake .. -DCMAKE_INSTALL_PREFIX=${COMMON_INSTALL_DIR} \
     -DCMAKE_BUILD_TYPE=Debug -DDEMO3_BUILD_GEN_TEST=ON \
-    -DDEMO3_BUILD_GEN_TOOLS=ON "$@"
+    -DDEMO3_BUILD_GEN_TOOLS=ON -DDEMO3_BUILD_GEN_SWIG=ON "$@"
 
 procs=$(nproc)
 if [ -n "${procs}" ]; then

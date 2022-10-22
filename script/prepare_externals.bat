@@ -63,8 +63,9 @@ goto comms_build
 echo "Updating COMMS library..."
 cd "%COMMS_SRC_DIR%"
 git fetch --all
-git checkout %COMMS_TAG%
+git checkout .
 git pull --all
+git checkout %COMMS_TAG%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 :comms_build
@@ -86,8 +87,9 @@ goto commsdsl_build
 echo "Updating commsdsl..."
 cd %COMMSDSL_SRC_DIR%
 git fetch --all
-git checkout %COMMSDSL_TAG%
+git checkout .
 git pull --all
+git checkout %COMMSDSL_TAG%
 
 :commsdsl_build
 echo "Building commsdsl ..."
@@ -109,8 +111,9 @@ goto cc_tools_qt_build
 echo "Updating cc_tools_qt..."
 cd %CC_TOOLS_QT_SRC_DIR%
 git fetch --all
-git checkout %CC_TOOLS_QT_TAG%
+git checkout .
 git pull --all
+git checkout %CC_TOOLS_QT_TAG%
 
 :cc_tools_qt_build
 echo "Building cc_tools_qt ..."
