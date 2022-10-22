@@ -6,7 +6,7 @@
 
 #include "comms/process.h"
 
-namespace demo3
+namespace cc_demo3
 {
 
 namespace server
@@ -131,4 +131,4 @@ void Session::sendMessage(const OutputMsg& msg)
 
 } // namespace server
 
-} // namespace demo3
+} // namespace cc_demo3

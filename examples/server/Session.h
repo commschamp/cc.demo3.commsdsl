@@ -8,11 +8,11 @@
 
 #include "common/boost_wrap.h"
 
-#include "demo3/Message.h"
-#include "demo3/input/ServerInputMessages.h"
-#include "demo3/frame/Frame.h"
+#include "cc_demo3/Message.h"
+#include "cc_demo3/input/ServerInputMessages.h"
+#include "cc_demo3/frame/Frame.h"
 
-namespace demo3
+namespace cc_demo3
 {
 
 namespace server
@@ -40,14 +40,14 @@ public:
     void start();
 
     using InputMsg = 
-        demo3::Message<
+        cc_demo3::Message<
             comms::option::ReadIterator<const std::uint8_t*>,
             comms::option::Handler<Session>,
             comms::option::NameInterface
         >;
 
-    using InConnect = demo3::message::Connect<InputMsg>;
-    using InMsg1 = demo3::message::Msg1<InputMsg>;
+    using InConnect = cc_demo3::message::Connect<InputMsg>;
+    using InMsg1 = cc_demo3::message::Msg1<InputMsg>;
 
     void handle(InConnect& msg);
     void handle(InMsg1& msg);
@@ -56,16 +56,16 @@ public:
 private:
 
     using OutputMsg = 
-        demo3::Message<
+        cc_demo3::Message<
             comms::option::WriteIterator<std::back_insert_iterator<std::vector<std::uint8_t> > >,
             comms::option::LengthInfoInterface,
             comms::option::IdInfoInterface,
             comms::option::NameInterface
         >;
 
-    using AllInputMessages = demo3::input::ServerInputMessages<InputMsg>;
+    using AllInputMessages = cc_demo3::input::ServerInputMessages<InputMsg>;
 
-    using Frame = demo3::frame::Frame<InputMsg, AllInputMessages>;
+    using Frame = cc_demo3::frame::Frame<InputMsg, AllInputMessages>;
 
     void terminateSession();
     void processInput();
@@ -84,4 +84,4 @@ using SessionPtr = std::unique_ptr<Session>;
 
 } // namespace server
 
-} // namespace demo3
+} // namespace cc_demo3

@@ -126,7 +126,7 @@ if (DEMO3_BUILD_GEN_PROTOCOL)
         ExternalProject_Add_Step(
             "prot_tgt" 
             "doc"
-            COMMAND ${CMAKE_COMMAND} --build ${prot_build_dir} --target doc_demo3
+            COMMAND ${CMAKE_COMMAND} --build ${prot_build_dir} --target doc_cc_demo3
             DEPENDEES "build"
             DEPENDERS "install"
         )
