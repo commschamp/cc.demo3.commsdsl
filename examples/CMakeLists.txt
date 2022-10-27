@@ -24,7 +24,7 @@ set (cc_compile_file "${LibComms_DIR}/CC_Compile.cmake")
 include (${cc_compile_file})
 
 set (warn_as_err_opt)
-if (NOT DEMO3_NO_WARN_AS_ERR)
+if (DEMO3_WARN_AS_ERR)
     set (warn_as_err_opt WARN_AS_ERR)
 endif()
 

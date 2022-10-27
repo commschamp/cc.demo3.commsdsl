@@ -60,7 +60,7 @@ if ("${DEMO3_SWIG_LANGUAGES}" STREQUAL "")
 endif ()
 
 set (warn_as_error "--warn-as-err")
-if (DEMO3_NO_WARN_AS_ERR)
+if (NOT DEMO3_WARN_AS_ERR)
     set (warn_as_error)
 endif ()
 
