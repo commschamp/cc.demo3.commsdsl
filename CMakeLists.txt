@@ -65,7 +65,7 @@ if (NOT DEMO3_WARN_AS_ERR)
 endif ()
 
 include (ExternalProject)
-if (DEMO3_BUILD_GEN_PROTOCOL)
+if (DEMO3_GEN_PROTOCOL)
     find_program(COMMSDSL2COMMS commsdsl2comms PATH_SUFFIXES bin REQUIRED)        
 
     set (prot_tmp_dir "${CMAKE_BINARY_DIR}/output.tmp")
