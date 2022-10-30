@@ -9,11 +9,11 @@
 
 #include "common/boost_wrap.h"
 
-#include "demo3/Message.h"
-#include "demo3/input/ClientInputMessages.h"
-#include "demo3/frame/Frame.h"
+#include "cc_demo3/Message.h"
+#include "cc_demo3/input/ClientInputMessages.h"
+#include "cc_demo3/frame/Frame.h"
 
-namespace demo3
+namespace cc_demo3
 {
 
 namespace client    
@@ -27,7 +27,7 @@ public:
     bool start();
 
     using InputMsg = 
-        demo3::Message<
+        cc_demo3::Message<
             comms::option::ReadIterator<const std::uint8_t*>,
             comms::option::Handler<Client>,
             comms::option::NameInterface
@@ -39,16 +39,16 @@ private:
     using Socket = boost::asio::ip::tcp::socket;
 
     using OutputMsg = 
-        demo3::Message<
+        cc_demo3::Message<
             comms::option::WriteIterator<std::back_insert_iterator<std::vector<std::uint8_t> > >,
             comms::option::LengthInfoInterface,
             comms::option::IdInfoInterface,
             comms::option::NameInterface
         >;
 
-    using AllInputMessages = demo3::input::ClientInputMessages<InputMsg>;
+    using AllInputMessages = cc_demo3::input::ClientInputMessages<InputMsg>;
 
-    using Frame = demo3::frame::Frame<InputMsg, AllInputMessages>;
+    using Frame = cc_demo3::frame::Frame<InputMsg, AllInputMessages>;
 
 
     void readDataFromServer();
@@ -70,4 +70,4 @@ private:
 
 } // namespace client
 
-} // namespace demo3
+} // namespace cc_demo3

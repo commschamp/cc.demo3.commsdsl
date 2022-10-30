@@ -3,11 +3,11 @@
 #include <iostream>
 #include <sstream>
 
-#include "demo3/MsgId.h"
+#include "cc_demo3/MsgId.h"
 #include "comms/units.h"
 #include "comms/process.h"
 
-namespace demo3
+namespace cc_demo3
 {
 
 namespace client
@@ -134,14 +134,14 @@ void Client::readDataFromStdin()
 
 void Client::sendConnect()
 {
-    demo3::message::Connect<OutputMsg> msg;
+    cc_demo3::message::Connect<OutputMsg> msg;
     comms::cast_assign(msg.field_version().value()) = m_sentVersion;
     sendMessage(msg);
 }
 
 void Client::sendMsg1()
 {
-    demo3::message::Msg1<OutputMsg> msg;
+    cc_demo3::message::Msg1<OutputMsg> msg;
     comms::cast_assign(msg.transportField_version().value()) = m_sentVersion;
     msg.doRefresh();
     sendMessage(msg);
@@ -182,4 +182,4 @@ void Client::processInput()
 
 } // namespace client
 
-} // namespace demo3
+} // namespace cc_demo3
