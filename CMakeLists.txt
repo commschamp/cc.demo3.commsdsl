@@ -31,7 +31,7 @@ option (DEMO3_BUILD_EXAMPLES "Build examples." ON)
 # COMMSDSL2SWIG_EXTRA_ARGS - Extra arguments to pass to "commsdsl2swig"
 # COMMSDSL2EMSCRIPTEN_EXTRA_ARGS - Extra arguments to pass to "commsdsl2emscripten"
 
-set (VERSION "2.2.1")
+set (DEMO3_VERSION "2.3")
 
 set (EXTERNALS_DIR "${PROJECT_SOURCE_DIR}/externals")
 
@@ -85,7 +85,7 @@ if (DEMO3_GEN_PROTOCOL)
     add_custom_command(
         OUTPUT ${prot_tmp_dir}
         DEPENDS ${schema_file} ${src_files} rm_prot_tmp_tgt
-        COMMAND ${COMMSDSL2COMMS} ${warn_as_error} -V ${VERSION}
+        COMMAND ${COMMSDSL2COMMS} ${warn_as_error} -V ${DEMO3_VERSION}
             -o ${prot_tmp_dir} 
             ${COMMSDSL2COMMS_EXTRA_ARGS}  ${schema_file}
     )
