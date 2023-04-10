@@ -46,8 +46,7 @@ public:
             comms::option::NameInterface
         >;
 
-    using InConnect = cc_demo3::message::Connect<InputMsg>;
-    using InMsg1 = cc_demo3::message::Msg1<InputMsg>;
+    CC_DEMO3_ALIASES_FOR_SERVER_INPUT_MESSAGES_DEFAULT_OPTIONS(In,,InputMsg);
 
     void handle(InConnect& msg);
     void handle(InMsg1& msg);
