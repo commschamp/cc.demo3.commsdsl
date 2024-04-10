@@ -32,8 +32,8 @@ option (DEMO3_BUILD_EXAMPLES "Build examples." ON)
 # COMMSDSL2SWIG_EXTRA_ARGS - Extra arguments to pass to "commsdsl2swig"
 # COMMSDSL2EMSCRIPTEN_EXTRA_ARGS - Extra arguments to pass to "commsdsl2emscripten"
 
-set (DEMO3_VERSION "2.6.1")
-set (DEMO3_MIN_COMMSDSL_VERSION "6.3")
+set (DEMO3_VERSION "2.7")
+set (DEMO3_MIN_COMMSDSL_VERSION "6.3.2")
 
 set (EXTERNALS_DIR "${PROJECT_SOURCE_DIR}/externals")
 
