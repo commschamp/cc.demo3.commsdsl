@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema name="cc_demo3" endian="big" version="5" dslVersion="6">
+<schema name="cc_demo3" endian="big" version="5" dslVersion="7">
     <fields>
         <enum name="MsgId" type="uint8" semanticType="messageId" >
             <validValue name="Connect" val="1" />
@@ -13,7 +13,7 @@
     
     <frame name="Frame">
         <sync name="Sync">
-            <int name="Sync" type="uint16" defaultValue="0xabcd" validValue="0xabcd" failOnInvalid="true"/>
+            <int name="Sync" type="uint16" defaultValidValue="0xabcd" failOnInvalid="true"/>
         </sync>
         <size name="Size">
             <int name="Size" type="uint16" serOffset="2" displayOffset="2"/>
