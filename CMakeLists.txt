@@ -33,7 +33,7 @@ option (DEMO3_BUILD_EXAMPLES "Build examples." ON)
 # COMMSDSL2SWIG_EXTRA_ARGS - Extra arguments to pass to "commsdsl2swig"
 # COMMSDSL2EMSCRIPTEN_EXTRA_ARGS - Extra arguments to pass to "commsdsl2emscripten"
 
-set (DEMO3_VERSION "3.0.1")
+set (DEMO3_VERSION "3.0.2")
 set (DEMO3_MIN_COMMSDSL_VERSION "7.0.2")
 
 if (("${CMAKE_VERSION}" VERSION_GREATER_EQUAL "3.30") AND
