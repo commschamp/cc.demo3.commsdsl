@@ -214,7 +214,7 @@ if (DEMO3_GEN_TOOLS)
 
     add_custom_target("tools_output_tgt" ALL
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${tools_tmp_dir}
-        COMMAND ${COMMSDSL2TOOLS_QT} ${warn_as_error} ${COMMSDSL2TOOLS_QT_EXTRA_ARGS}
+        COMMAND ${COMMSDSL2TOOLS_QT} ${warn_as_error} -V ${DEMO3_VERSION} ${COMMSDSL2TOOLS_QT_EXTRA_ARGS}
             --protocol "::CC Demo3:Synthenic demo protocol to demonstrate protocol versioning where the version is reported in the first Connect message.:cc.Demo3ProtocolPlugin"
             -o ${tools_tmp_dir} -c ${PROJECT_SOURCE_DIR}/src/tools ${schema_file}        
         COMMAND ${CMAKE_COMMAND}
@@ -267,8 +267,8 @@ if (DEMO3_GEN_SWIG)
 
     add_custom_target("swig_output_tgt" ALL
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${swig_tmp_dir}
-        COMMAND ${COMMSDSL2SWIG} ${warn_as_error} ${COMMSDSL2SWIG_EXTRA_ARGS}
-            -c ${DEMO3_SWIG_SRC_DIR} -o ${swig_tmp_dir} ${schema_file}        
+        COMMAND ${COMMSDSL2SWIG} ${warn_as_error} -V ${DEMO3_VERSION} ${COMMSDSL2SWIG_EXTRA_ARGS}
+            -c ${DEMO3_SWIG_SRC_DIR} -o ${swig_tmp_dir} ${schema_file}
         COMMAND ${CMAKE_COMMAND}
             -DGENERATED="${swig_tmp_dir}" -DOUTPUT="${DEMO3_SWIG_OUTPUT_DIR}"
             -P "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake"        
@@ -325,7 +325,7 @@ if (DEMO3_GEN_EMSCRIPTEN)
 
     add_custom_target("emscripten_output_tgt" ALL
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${emscripten_tmp_dir}
-        COMMAND ${COMMSDSL2EMSCRIPTEN} ${warn_as_error} ${COMMSDSL2EMSCRIPTEN_EXTRA_ARGS}
+        COMMAND ${COMMSDSL2EMSCRIPTEN} ${warn_as_error} -V ${DEMO3_VERSION} ${COMMSDSL2EMSCRIPTEN_EXTRA_ARGS}
             -o ${emscripten_tmp_dir} -c ${PROJECT_SOURCE_DIR}/src/emscripten ${schema_file}
         COMMAND ${CMAKE_COMMAND}
             -DGENERATED="${emscripten_tmp_dir}" -DOUTPUT="${DEMO3_EMSCRIPTEN_OUTPUT_DIR}"
