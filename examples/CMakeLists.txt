@@ -33,7 +33,7 @@ if (DEMO3_USE_CCACHE)
 
     if (NOT "${DEMO3_CCACHE_EXECUTABLE}" STREQUAL "")
         list (APPEND extra_opts CCACHE_EXECTUABLE "${DEMO3_CCACHE_EXECUTABLE}")
-    endif ()    
+    endif ()
 endif()
 
 cc_compile(${extra_opts})

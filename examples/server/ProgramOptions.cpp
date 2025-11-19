@@ -15,7 +15,7 @@ namespace cc_demo3
 {
 
 namespace server
-{    
+{
 
 namespace
 {
