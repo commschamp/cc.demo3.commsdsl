@@ -10,7 +10,7 @@
     <interface name="Message">
         <int name="Version" type="uint8" semanticType="version" />
     </interface>
-    
+
     <frame name="Frame">
         <sync name="Sync">
             <int name="Sync" type="uint16" defaultValidValue="0xabcd" failOnInvalid="true"/>
@@ -26,12 +26,12 @@
         <checksum name="Checksum" alg="crc-ccitt" from="Size">
             <int name="Checksum" type="uint16" />
         </checksum>
-    </frame>       
+    </frame>
 
     <message name="Connect" id="MsgId.Connect" sender="client">
         <int name="Version" type="uint8" semanticType="version"/>
     </message>
-    
+
     <message name="Msg1" id="MsgId.Msg1" sender="client">
         <int name="F1" type="uint8" defaultValue="1" />
         <int name="F2" type="uint8" defaultValue="2" deprecated="2" removed="true" />

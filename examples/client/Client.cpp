@@ -34,14 +34,14 @@ void printVersionDependentField(const TField& f)
         std::cout << static_cast<unsigned>(f.field().value());
     }
     std::cout << '\n';
-}    
+}
 
-} // namespace 
+} // namespace
 
 Client::Client(
-        common::boost_wrap::io& io, 
+        common::boost_wrap::io& io,
         const std::string& server,
-        std::uint16_t port)    
+        std::uint16_t port)
   : m_io(io),
     m_socket(io),
     m_server(server),
@@ -59,20 +59,20 @@ bool Client::start()
     auto resolveResult = resolver.resolve(m_server, std::to_string(m_port), ec);
     if (ec) {
         std::cerr << "ERROR: Failed to resolve \"" << m_server << ':' << m_port << "\" " <<
-            "with error: " << ec.message() << std::endl; 
+            "with error: " << ec.message() << std::endl;
         return false;
     }
 
     if (resolveResult.empty()) {
-        std::cerr << "ERROR: No resolution result" << std::endl; 
-        return false;        
-    }    
+        std::cerr << "ERROR: No resolution result" << std::endl;
+        return false;
+    }
 
     auto endpoint = resolveResult.begin()->endpoint();
     m_socket.connect(endpoint, ec);
     if (ec) {
         std::cerr << "ERROR: Failed to connect to \"" << endpoint << "\" " <<
-            "with error: " << ec.message() << std::endl; 
+            "with error: " << ec.message() << std::endl;
         return false;
     }
 
@@ -109,7 +109,7 @@ void Client::readDataFromServer()
 
             m_inputBuf.insert(m_inputBuf.end(), m_readBuf.begin(), m_readBuf.begin() + bytesCount);
             processInput();
-            readDataFromServer();            
+            readDataFromServer();
         });
 }
 
@@ -119,7 +119,7 @@ void Client::readDataFromStdin()
     m_sentVersion = std::numeric_limits<decltype(m_sentVersion)>::max();
 
     do {
-        // Unfortunatelly Windows doesn't provide an easy way to 
+        // Unfortunatelly Windows doesn't provide an easy way to
         // asynchronously read from stdin with boost::asio,
         // read synchronously. DON'T COPY-PASTE TO PRODUCTION CODE!!!
         std::cin >> m_sentVersion;
