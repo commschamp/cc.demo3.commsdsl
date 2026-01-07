@@ -41,8 +41,8 @@ option (DEMO3_BUILD_EXAMPLES "Build examples." ON)
 # COMMSDSL2C_EXTRA_ARGS - Extra arguments to pass to "commsdsl2c"
 # COMMSDSL2LATEX_EXTRA_ARGS - Extra arguments to pass to "commsdsl2latex"
 
-set (DEMO3_VERSION "3.0.4")
-set (DEMO3_MIN_COMMSDSL_VERSION "7.3")
+set (DEMO3_VERSION "3.0.5")
+set (DEMO3_MIN_COMMSDSL_VERSION "8.0")
 
 if (("${CMAKE_VERSION}" VERSION_GREATER_EQUAL "3.30") AND
     (NOT DEFINED CMAKE_POLICY_DEFAULT_CMP0167))
@@ -107,7 +107,7 @@ endif ()
 
 include (ExternalProject)
 if (DEMO3_GEN_PROTOCOL)
-    find_program(COMMSDSL2COMMS commsdsl2comms PATH_SUFFIXES bin REQUIRED)        
+    find_program(COMMSDSL2COMMS commsdsl2comms PATH_SUFFIXES bin REQUIRED)
     execute_process(COMMAND "${COMMSDSL2COMMS}" --version OUTPUT_VARIABLE commsdsl2comms_version)
     if ("${commsdsl2comms_version}" VERSION_LESS "${DEMO3_MIN_COMMSDSL_VERSION}")
         message (FATAL_ERROR "Version of commsdsl2comms is too old, required minimum is v${DEMO3_MIN_COMMSDSL_VERSION}.")
@@ -119,7 +119,7 @@ if (DEMO3_GEN_PROTOCOL)
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${prot_tmp_dir}
         COMMAND ${COMMSDSL2COMMS} ${warn_as_error} -V ${DEMO3_VERSION}
             -o ${prot_tmp_dir} -c ${PROJECT_SOURCE_DIR}/src/protocol
-            ${COMMSDSL2COMMS_EXTRA_ARGS} ${schema_file}        
+            ${COMMSDSL2COMMS_EXTRA_ARGS} ${schema_file}
         COMMAND ${CMAKE_COMMAND}
             -DGENERATED="${prot_tmp_dir}" -DOUTPUT="${DEMO3_PROT_OUTPUT_DIR}"
             -P "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake"
@@ -128,7 +128,7 @@ if (DEMO3_GEN_PROTOCOL)
     if (DEMO3_BUILD_PROTOCOL)
         execute_process(
             COMMAND ${CMAKE_COMMAND} -E make_directory ${DEMO3_PROT_OUTPUT_DIR}
-        )  
+        )
 
         execute_process(
             COMMAND ${CMAKE_COMMAND} -E touch ${DEMO3_PROT_OUTPUT_DIR}/dummy.txt
@@ -146,7 +146,7 @@ if (DEMO3_GEN_PROTOCOL)
                 -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER} -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
                 -DCMAKE_GENERATOR=${CMAKE_GENERATOR} -DCMAKE_GENERATOR_PLATFORM=${CMAKE_GENERATOR_PLATFORM}
                 -DCMAKE_GENERATOR_TOOLSET=${CMAKE_GENERATOR_TOOLSET} -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
-                -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_EXE_LINKER_FLAGS=${CMAKE_EXE_LINKER_FLAGS}           
+                -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_EXE_LINKER_FLAGS=${CMAKE_EXE_LINKER_FLAGS}
                 -DOPT_REQUIRE_COMMS_LIB=OFF -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
                 -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
         )
@@ -154,7 +154,7 @@ if (DEMO3_GEN_PROTOCOL)
         find_package(Doxygen)
         if (DEMO3_BUILD_PROT_DOC AND DOXYGEN_FOUND)
             ExternalProject_Add_Step(
-                "prot_tgt" 
+                "prot_tgt"
                 "doc"
                 COMMAND ${CMAKE_COMMAND} --build ${prot_build_dir} --target doc_cc_demo3
                 DEPENDEES "build"
@@ -162,34 +162,34 @@ if (DEMO3_GEN_PROTOCOL)
             )
         endif ()
     endif ()
-endif ()  
+endif ()
 
 set (combined_prefix_path ${CMAKE_INSTALL_PREFIX} ${CMAKE_PREFIX_PATH})
 string (REPLACE ";" "|" combined_prefix_path_str "${combined_prefix_path}")
 
 if (DEMO3_GEN_TEST)
-    find_program(COMMSDSL2TEST commsdsl2test PATH_SUFFIXES bin REQUIRED)        
+    find_program(COMMSDSL2TEST commsdsl2test PATH_SUFFIXES bin REQUIRED)
     execute_process(COMMAND "${COMMSDSL2TEST}" --version OUTPUT_VARIABLE commsdsl2test_version)
     if ("${commsdsl2test_version}" VERSION_LESS "${DEMO3_MIN_COMMSDSL_VERSION}")
         message (FATAL_ERROR "Version of commsdsl2test is too old, required minimum is v${DEMO3_MIN_COMMSDSL_VERSION}.")
-    endif ()    
+    endif ()
 
     set (test_tmp_dir "${CMAKE_BINARY_DIR}/output_test.tmp")
 
     add_custom_target("test_output_tgt" ALL
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${test_tmp_dir}
         COMMAND ${COMMSDSL2TEST} ${warn_as_error} -V ${DEMO3_VERSION} ${COMMSDSL2TEST_EXTRA_ARGS}
-            -o ${test_tmp_dir} -c ${PROJECT_SOURCE_DIR}/src/test ${schema_file}        
+            -o ${test_tmp_dir} -c ${PROJECT_SOURCE_DIR}/src/test ${schema_file}
         COMMAND ${CMAKE_COMMAND}
             -DGENERATED="${test_tmp_dir}" -DOUTPUT="${DEMO3_TEST_OUTPUT_DIR}"
-            -P "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake"        
+            -P "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake"
         DEPENDS "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake" ${schema_file})
 
     if (DEMO3_BUILD_TEST)
         if ((NOT DEMO3_GEN_PROTOCOL) OR (NOT DEMO3_BUILD_PROTOCOL))
             message (FATAL_ERROR "DEMO3_GEN_PROTOCOL and DEMO3_BUILD_PROTOCOL are required for DEMO3_BUILD_TEST")
         endif ()
-            
+
         execute_process(
             COMMAND ${CMAKE_COMMAND} -E make_directory ${DEMO3_TEST_OUTPUT_DIR}
         )
@@ -210,7 +210,7 @@ if (DEMO3_GEN_TEST)
                 -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER} -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
                 -DCMAKE_GENERATOR=${CMAKE_GENERATOR} -DCMAKE_GENERATOR_PLATFORM=${CMAKE_GENERATOR_PLATFORM}
                 -DCMAKE_GENERATOR_TOOLSET=${CMAKE_GENERATOR_TOOLSET} -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
-                -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_EXE_LINKER_FLAGS=${CMAKE_EXE_LINKER_FLAGS}           
+                -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_EXE_LINKER_FLAGS=${CMAKE_EXE_LINKER_FLAGS}
                 -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
                 -DCMAKE_PREFIX_PATH=${combined_prefix_path_str}
                 -DOPT_USE_CCACHE=${DEMO3_USE_CCACHE}
@@ -220,11 +220,11 @@ if (DEMO3_GEN_TEST)
 endif ()
 
 if (DEMO3_GEN_TOOLS)
-    find_program(COMMSDSL2TOOLS_QT commsdsl2tools_qt PATH_SUFFIXES bin REQUIRED)    
+    find_program(COMMSDSL2TOOLS_QT commsdsl2tools_qt PATH_SUFFIXES bin REQUIRED)
     execute_process(COMMAND "${COMMSDSL2TOOLS_QT}" --version OUTPUT_VARIABLE commsdsl2tools_qt_version)
     if ("${commsdsl2tools_qt_version}" VERSION_LESS "${DEMO3_MIN_COMMSDSL_VERSION}")
         message (FATAL_ERROR "Version of commsdsl2tools_qt is too old, required minimum is v${DEMO3_MIN_COMMSDSL_VERSION}.")
-    endif ()    
+    endif ()
 
     set (tools_tmp_dir "${CMAKE_BINARY_DIR}/output_tools.tmp")
 
@@ -232,20 +232,20 @@ if (DEMO3_GEN_TOOLS)
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${tools_tmp_dir}
         COMMAND ${COMMSDSL2TOOLS_QT} ${warn_as_error} -V ${DEMO3_VERSION} ${COMMSDSL2TOOLS_QT_EXTRA_ARGS}
             --protocol "::CC Demo3:Synthenic demo protocol to demonstrate protocol versioning where the version is reported in the first Connect message.:cc.Demo3ProtocolPlugin"
-            -o ${tools_tmp_dir} -c ${PROJECT_SOURCE_DIR}/src/tools ${schema_file}        
+            -o ${tools_tmp_dir} -c ${PROJECT_SOURCE_DIR}/src/tools ${schema_file}
         COMMAND ${CMAKE_COMMAND}
             -DGENERATED="${tools_tmp_dir}" -DOUTPUT="${DEMO3_TOOLS_OUTPUT_DIR}"
-            -P "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake"        
+            -P "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake"
         DEPENDS "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake" ${schema_file})
 
     if (DEMO3_BUILD_TOOLS)
         if ((NOT DEMO3_GEN_PROTOCOL) OR (NOT DEMO3_BUILD_PROTOCOL))
             message (FATAL_ERROR "DEMO3_GEN_PROTOCOL and DEMO3_BUILD_PROTOCOL are required for DEMO3_BUILD_TOOLS")
         endif ()
-            
+
         execute_process(
             COMMAND ${CMAKE_COMMAND} -E make_directory ${DEMO3_TOOLS_OUTPUT_DIR}
-        )    
+        )
 
         execute_process(
             COMMAND ${CMAKE_COMMAND} -E touch ${DEMO3_TOOLS_OUTPUT_DIR}/dummy.txt
@@ -263,21 +263,21 @@ if (DEMO3_GEN_TOOLS)
                 -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER} -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
                 -DCMAKE_GENERATOR=${CMAKE_GENERATOR} -DCMAKE_GENERATOR_PLATFORM=${CMAKE_GENERATOR_PLATFORM}
                 -DCMAKE_GENERATOR_TOOLSET=${CMAKE_GENERATOR_TOOLSET} -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
-                -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_EXE_LINKER_FLAGS=${CMAKE_EXE_LINKER_FLAGS}           
+                -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_EXE_LINKER_FLAGS=${CMAKE_EXE_LINKER_FLAGS}
                 -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} -DCMAKE_PREFIX_PATH=${combined_prefix_path_str}
                 -DOPT_QT_MAJOR_VERSION=${DEMO3_TOOLS_QT_VER} -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
                 -DOPT_USE_CCACHE=${DEMO3_USE_CCACHE}
                 -DOPT_CCACHE_EXECUTABLE=${DEMO3_CCACHE_EXECUTABLE}
-        )   
+        )
     endif ()
 endif ()
 
 if (DEMO3_GEN_SWIG)
-    find_program(COMMSDSL2SWIG commsdsl2swig PATH_SUFFIXES bin REQUIRED)    
+    find_program(COMMSDSL2SWIG commsdsl2swig PATH_SUFFIXES bin REQUIRED)
     execute_process(COMMAND "${COMMSDSL2SWIG}" --version OUTPUT_VARIABLE commsdsl2swig_version)
     if ("${commsdsl2swig_version}" VERSION_LESS "${DEMO3_MIN_COMMSDSL_VERSION}")
         message (FATAL_ERROR "Version of commsdsl2swig is too old, required minimum is v${DEMO3_MIN_COMMSDSL_VERSION}.")
-    endif ()      
+    endif ()
 
     set (swig_tmp_dir "${CMAKE_BINARY_DIR}/output_swig.tmp")
 
@@ -287,17 +287,17 @@ if (DEMO3_GEN_SWIG)
             -c ${DEMO3_SWIG_SRC_DIR} -o ${swig_tmp_dir} ${schema_file}
         COMMAND ${CMAKE_COMMAND}
             -DGENERATED="${swig_tmp_dir}" -DOUTPUT="${DEMO3_SWIG_OUTPUT_DIR}"
-            -P "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake"        
+            -P "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake"
         DEPENDS "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake" ${schema_file})
 
     if (DEMO3_BUILD_SWIG)
         if ((NOT DEMO3_GEN_PROTOCOL) OR (NOT DEMO3_BUILD_PROTOCOL))
             message (FATAL_ERROR "DEMO3_GEN_PROTOCOL and DEMO3_BUILD_PROTOCOL are required for DEMO3_BUILD_SWIG")
         endif ()
-            
+
         execute_process(
             COMMAND ${CMAKE_COMMAND} -E make_directory ${DEMO3_SWIG_OUTPUT_DIR}
-        )    
+        )
 
         execute_process(
             COMMAND ${CMAKE_COMMAND} -E touch ${DEMO3_SWIG_OUTPUT_DIR}/dummy.txt
@@ -317,25 +317,25 @@ if (DEMO3_GEN_SWIG)
                 -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER} -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
                 -DCMAKE_GENERATOR=${CMAKE_GENERATOR} -DCMAKE_GENERATOR_PLATFORM=${CMAKE_GENERATOR_PLATFORM}
                 -DCMAKE_GENERATOR_TOOLSET=${CMAKE_GENERATOR_TOOLSET} -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
-                -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_EXE_LINKER_FLAGS=${CMAKE_EXE_LINKER_FLAGS}        
+                -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_EXE_LINKER_FLAGS=${CMAKE_EXE_LINKER_FLAGS}
                 -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
                 -DCMAKE_PREFIX_PATH=${combined_prefix_path_str}
                 -DOPT_SWIG_LANGUAGES=${combined_languages_str}
                 -DOPT_USE_CCACHE=${DEMO3_USE_CCACHE}
                 -DOPT_CCACHE_EXECUTABLE=${DEMO3_CCACHE_EXECUTABLE}
             INSTALL_COMMAND
-                ${CMAKE_COMMAND} -E echo "Skipping install"            
-        )   
+                ${CMAKE_COMMAND} -E echo "Skipping install"
+        )
     endif ()
 endif ()
 
 if (DEMO3_GEN_EMSCRIPTEN)
-    find_program(COMMSDSL2EMSCRIPTEN commsdsl2emscripten PATH_SUFFIXES bin REQUIRED)    
-    find_program(EMCMAKE_EXECUTABLE emcmake REQUIRED)    
+    find_program(COMMSDSL2EMSCRIPTEN commsdsl2emscripten PATH_SUFFIXES bin REQUIRED)
+    find_program(EMCMAKE_EXECUTABLE emcmake REQUIRED)
     execute_process(COMMAND "${COMMSDSL2EMSCRIPTEN}" --version OUTPUT_VARIABLE commsdsl2emscripten_version)
     if ("${commsdsl2emscripten_version}" VERSION_LESS "${DEMO3_MIN_COMMSDSL_VERSION}")
         message (FATAL_ERROR "Version of commsdsl2emscripten is too old, required minimum is v${DEMO3_MIN_COMMSDSL_VERSION}.")
-    endif ()    
+    endif ()
 
     set (emscripten_tmp_dir "${CMAKE_BINARY_DIR}/output_emscripten.tmp")
 
@@ -345,17 +345,17 @@ if (DEMO3_GEN_EMSCRIPTEN)
             -o ${emscripten_tmp_dir} -c ${PROJECT_SOURCE_DIR}/src/emscripten ${schema_file}
         COMMAND ${CMAKE_COMMAND}
             -DGENERATED="${emscripten_tmp_dir}" -DOUTPUT="${DEMO3_EMSCRIPTEN_OUTPUT_DIR}"
-            -P "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake"        
+            -P "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake"
         DEPENDS "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake" ${schema_file})
 
     if (DEMO3_BUILD_EMSCRIPTEN)
         if ((NOT DEMO3_GEN_PROTOCOL) OR (NOT DEMO3_BUILD_PROTOCOL))
             message (FATAL_ERROR "DEMO3_GEN_PROTOCOL and DEMO3_BUILD_PROTOCOL are required for DEMO3_BUILD_EMSCRIPTEN")
         endif ()
-            
+
         execute_process(
             COMMAND ${CMAKE_COMMAND} -E make_directory ${DEMO3_EMSCRIPTEN_OUTPUT_DIR}
-        )    
+        )
 
         execute_process(
             COMMAND ${CMAKE_COMMAND} -E touch ${DEMO3_EMSCRIPTEN_OUTPUT_DIR}/dummy.txt
@@ -365,7 +365,7 @@ if (DEMO3_GEN_EMSCRIPTEN)
         get_target_property(comms_include_dirs cc::comms INTERFACE_INCLUDE_DIRECTORIES)
         set (prot_include_dir "${CMAKE_INSTALL_PREFIX}/include")
         set (extra_includes_path ${prot_include_dir} ${comms_include_dirs})
-        string (REPLACE ";" "|" extra_includes_path_str "${extra_includes_path}")    
+        string (REPLACE ";" "|" extra_includes_path_str "${extra_includes_path}")
 
 
         set (emscripten_build_dir ${CMAKE_CURRENT_BINARY_DIR}/emscripten_tgt_build)
@@ -379,42 +379,42 @@ if (DEMO3_GEN_EMSCRIPTEN)
             LIST_SEPARATOR |
             CMAKE_ARGS
                 -DCMAKE_GENERATOR=${CMAKE_GENERATOR} -DCMAKE_GENERATOR_PLATFORM=${CMAKE_GENERATOR_PLATFORM}
-                -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} 
+                -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                 -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
                 -DOPT_MODULARIZE=ON
                 -DOPT_EXTRA_INCLUDE_DIRS=${extra_includes_path_str}
                 -DOPT_USE_CCACHE=${DEMO3_USE_CCACHE}
                 -DOPT_CCACHE_EXECUTABLE=${DEMO3_CCACHE_EXECUTABLE}
-        )   
+        )
     endif ()
 endif ()
 
 if (DEMO3_GEN_C)
-    find_program(COMMSDSL2C commsdsl2c PATH_SUFFIXES bin REQUIRED)    
+    find_program(COMMSDSL2C commsdsl2c PATH_SUFFIXES bin REQUIRED)
     execute_process(COMMAND "${COMMSDSL2C}" --version OUTPUT_VARIABLE commsdsl2c_version)
     if ("${commsdsl2c_version}" VERSION_LESS "${DEMO3_MIN_COMMSDSL_VERSION}")
         message (FATAL_ERROR "Version of commsdsl2c is too old, required minimum is v${DEMO3_MIN_COMMSDSL_VERSION}.")
-    endif ()    
+    endif ()
 
     set (c_tmp_dir "${CMAKE_BINARY_DIR}/output_c.tmp")
 
     add_custom_target("c_output_tgt" ALL
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${c_tmp_dir}
         COMMAND ${COMMSDSL2C} ${warn_as_error} -V ${DEMO3_VERSION} ${COMMSDSL2C_EXTRA_ARGS}
-            -o ${c_tmp_dir} -c ${PROJECT_SOURCE_DIR}/src/c ${schema_file}        
+            -o ${c_tmp_dir} -c ${PROJECT_SOURCE_DIR}/src/c ${schema_file}
         COMMAND ${CMAKE_COMMAND}
             -DGENERATED="${c_tmp_dir}" -DOUTPUT="${DEMO3_C_OUTPUT_DIR}"
-            -P "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake"        
+            -P "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake"
         DEPENDS "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake" ${schema_file})
 
     if (DEMO3_BUILD_C)
         if ((NOT DEMO3_GEN_PROTOCOL) OR (NOT DEMO3_BUILD_PROTOCOL))
             message (FATAL_ERROR "DEMO3_GEN_PROTOCOL and DEMO3_BUILD_PROTOCOL are required for DEMO3_BUILD_C")
         endif ()
-            
+
         execute_process(
             COMMAND ${CMAKE_COMMAND} -E make_directory ${DEMO3_C_OUTPUT_DIR}
-        )    
+        )
 
         execute_process(
             COMMAND ${CMAKE_COMMAND} -E touch ${DEMO3_C_OUTPUT_DIR}/dummy.txt
@@ -432,48 +432,48 @@ if (DEMO3_GEN_C)
                 -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER} -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
                 -DCMAKE_GENERATOR=${CMAKE_GENERATOR} -DCMAKE_GENERATOR_PLATFORM=${CMAKE_GENERATOR_PLATFORM}
                 -DCMAKE_GENERATOR_TOOLSET=${CMAKE_GENERATOR_TOOLSET} -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
-                -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_EXE_LINKER_FLAGS=${CMAKE_EXE_LINKER_FLAGS}           
+                -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_EXE_LINKER_FLAGS=${CMAKE_EXE_LINKER_FLAGS}
                 -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} -DCMAKE_PREFIX_PATH=${combined_prefix_path_str}
                 -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
                 -DOPT_USE_CCACHE=${DEMO3_USE_CCACHE}
                 -DOPT_CCACHE_EXECUTABLE=${DEMO3_CCACHE_EXECUTABLE}
-        )  
-        
+        )
+
         find_package(Doxygen)
         if (DEMO3_BUILD_PROT_DOC AND DOXYGEN_FOUND)
             ExternalProject_Add_Step(
-                "c_tgt" 
+                "c_tgt"
                 "doc"
                 COMMAND ${CMAKE_COMMAND} --build ${c_build_dir} --target doc_cc_demo3_c
                 DEPENDEES "build"
                 DEPENDERS "install"
             )
-        endif ()        
+        endif ()
     endif ()
 endif ()
 
 if (DEMO3_GEN_LATEX)
-    find_program(COMMSDSL2LATEX commsdsl2latex PATH_SUFFIXES bin REQUIRED)    
+    find_program(COMMSDSL2LATEX commsdsl2latex PATH_SUFFIXES bin REQUIRED)
     execute_process(COMMAND "${COMMSDSL2LATEX}" --version OUTPUT_VARIABLE commsdsl2latex_version)
     if ("${commsdsl2latex_version}" VERSION_LESS "${DEMO3_MIN_COMMSDSL_VERSION}")
         message (FATAL_ERROR "Version of commsdsl2latex is too old, required minimum is v${DEMO3_MIN_COMMSDSL_VERSION}.")
-    endif ()    
+    endif ()
 
     set (latex_tmp_dir "${CMAKE_BINARY_DIR}/output_latex.tmp")
 
     add_custom_target("latext_output_tgt" ALL
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${latex_tmp_dir}
         COMMAND ${COMMSDSL2LATEX} ${warn_as_error} ${COMMSDSL2LATEX_EXTRA_ARGS}
-            -o ${latex_tmp_dir} -c ${PROJECT_SOURCE_DIR}/src/latex ${schema_file}        
+            -o ${latex_tmp_dir} -c ${PROJECT_SOURCE_DIR}/src/latex ${schema_file}
         COMMAND ${CMAKE_COMMAND}
             -DGENERATED="${latex_tmp_dir}" -DOUTPUT="${DEMO3_LATEX_OUTPUT_DIR}"
-            -P "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake"        
+            -P "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake"
         DEPENDS "${CMAKE_CURRENT_LIST_DIR}/CopyGenerated.cmake" ${schema_file})
 
     if (DEMO3_BUILD_LATEX)
         execute_process(
             COMMAND ${CMAKE_COMMAND} -E make_directory ${DEMO3_LATEX_OUTPUT_DIR}
-        )    
+        )
 
         execute_process(
             COMMAND ${CMAKE_COMMAND} -E touch ${DEMO3_LATEX_OUTPUT_DIR}/dummy.txt
@@ -488,13 +488,13 @@ if (DEMO3_GEN_LATEX)
             BINARY_DIR ${latex_build_dir}
             LIST_SEPARATOR |
             CMAKE_ARGS
-                -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} 
+                -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                 -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} -DCMAKE_PREFIX_PATH=${combined_prefix_path_str}
             BUILD_COMMAND
                 ${CMAKE_COMMAND} --build ${latex_build_dir} --config ${CMAKE_BUILD_TYPE} --target all_artifacts
             INSTALL_COMMAND
                 ${CMAKE_COMMAND} -E echo "No install for documentation build"
-        )  
+        )
     endif ()
 endif ()
 
