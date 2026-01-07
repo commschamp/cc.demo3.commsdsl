@@ -41,7 +41,7 @@ option (DEMO3_BUILD_EXAMPLES "Build examples." ON)
 # COMMSDSL2C_EXTRA_ARGS - Extra arguments to pass to "commsdsl2c"
 # COMMSDSL2LATEX_EXTRA_ARGS - Extra arguments to pass to "commsdsl2latex"
 
-set (DEMO3_VERSION "3.0.5")
+set (DEMO3_VERSION "3.0.6")
 set (DEMO3_MIN_COMMSDSL_VERSION "8.0")
 
 if (("${CMAKE_VERSION}" VERSION_GREATER_EQUAL "3.30") AND
