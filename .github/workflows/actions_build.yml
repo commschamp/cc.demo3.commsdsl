@@ -76,7 +76,7 @@ jobs:
         -DDEMO3_TOOLS_QT_VER=${{matrix.qt_ver}} \
         -DDEMO3_GEN_PROTOCOL=ON -DDEMO3_GEN_TEST=ON -DDEMO3_GEN_TOOLS=ON -DDEMO3_BUILD_TOOLS=${{env.BUILD_TOOLS}} \
         -DDEMO3_GEN_SWIG=ON -DDEMO3_GEN_EMSCRIPTEN=ON -DDEMO3_GEN_C=ON -DDEMO3_GEN_LATEX=ON -DDEMO3_BUILD_LATEX=${{env.BUILD_LATEX}} \
-        -DDEMO3_BUILD_PROT_DOC=${{env.BUILD_DOCS}}
+        -DDEMO3_GEN_WIRESHARK=ON -DDEMO3_BUILD_PROT_DOC=${{env.BUILD_DOCS}}
       env:
         CC: gcc-${{matrix.cc_ver}}
         CXX: g++-${{matrix.cc_ver}}
@@ -140,7 +140,8 @@ jobs:
         -DCMAKE_PREFIX_PATH=${{runner.workspace}}/build/install -DCMAKE_CXX_STANDARD=${{matrix.cpp}} \
         -DDEMO3_TOOLS_QT_VER=${{matrix.qt_ver}} \
         -DDEMO3_GEN_PROTOCOL=ON -DDEMO3_GEN_TEST=ON -DDEMO3_GEN_TOOLS=ON -DDEMO3_BUILD_TOOLS=${{env.BUILD_TOOLS}} \
-        -DDEMO3_GEN_SWIG=ON -DDEMO3_GEN_EMSCRIPTEN=ON -DDEMO3_GEN_C=ON -DDEMO3_GEN_LATEX=ON -DDEMO3_BUILD_LATEX=OFF
+        -DDEMO3_GEN_SWIG=ON -DDEMO3_GEN_EMSCRIPTEN=ON -DDEMO3_GEN_C=ON -DDEMO3_GEN_LATEX=ON -DDEMO3_BUILD_LATEX=OFF \
+        -DDEMO3_GEN_WIRESHARK=ON
       env:
         CC: clang-${{matrix.cc_ver}}
         CXX: clang++-${{matrix.cc_ver}}
@@ -215,7 +216,8 @@ jobs:
         -DCMAKE_PREFIX_PATH=${{runner.workspace}}/build/install -DCMAKE_CXX_STANDARD=${{matrix.cpp}} \
         -DDEMO3_TOOLS_QT_VER=${{matrix.qt_ver}} \
         -DDEMO3_GEN_PROTOCOL=ON -DDEMO3_GEN_TEST=ON -DDEMO3_GEN_TOOLS=ON -DDEMO3_BUILD_TOOLS=${{env.BUILD_TOOLS}} \
-        -DDEMO3_GEN_SWIG=ON -DDEMO3_GEN_EMSCRIPTEN=ON -DDEMO3_GEN_C=ON -DDEMO3_GEN_LATEX=ON -DDEMO3_BUILD_LATEX=OFF
+        -DDEMO3_GEN_SWIG=ON -DDEMO3_GEN_EMSCRIPTEN=ON -DDEMO3_GEN_C=ON -DDEMO3_GEN_LATEX=ON -DDEMO3_BUILD_LATEX=OFF \
+        -DDEMO3_GEN_WIRESHARK=ON
       env:
         CC: clang-${{matrix.cc_ver}}
         CXX: clang++-${{matrix.cc_ver}}
@@ -293,7 +295,7 @@ jobs:
           -DCMAKE_POLICY_DEFAULT_CMP0167=NEW ^
           -DCMAKE_CXX_STANDARD=${{matrix.cpp}} -DDEMO3_GEN_TOOLS=ON -DDEMO3_BUILD_TOOLS=${{env.BUILD_TOOLS}} -DDEMO3_TOOLS_QT_VER=${{matrix.qt_ver}} ^
           -DDEMO3_GEN_PROTOCOL=ON -DDEMO3_GEN_TEST=ON -DDEMO3_GEN_C=ON -DDEMO3_GEN_LATEX=ON -DDEMO3_BUILD_LATEX=OFF ^
-          -DDEMO3_BUILD_EXAMPLES=${{env.HAS_BOOST}}
+          -DDEMO3_GEN_WIRESHARK=ON -DDEMO3_BUILD_EXAMPLES=${{env.HAS_BOOST}}
       env:
         HAS_BOOST: "${{ matrix.arch == 'x64' && 'ON' || 'OFF' }}"
         BUILD_TOOLS: "${{ matrix.cpp >= 17 && matrix.arch == 'x64'  && 'ON' || 'OFF' }}"
@@ -370,7 +372,7 @@ jobs:
           -DCMAKE_POLICY_DEFAULT_CMP0167=NEW ^
           -DCMAKE_CXX_STANDARD=${{matrix.cpp}}  -DDEMO3_GEN_TOOLS=ON -DDEMO3_BUILD_TOOLS=${{env.BUILD_TOOLS}} -DDEMO3_TOOLS_QT_VER=${{matrix.qt_ver}} ^
           -DDEMO3_GEN_PROTOCOL=ON -DDEMO3_GEN_TEST=ON -DDEMO3_GEN_C=ON -DDEMO3_GEN_LATEX=ON -DDEMO3_BUILD_LATEX=OFF ^
-          -DDEMO3_BUILD_EXAMPLES=${{env.HAS_BOOST}}
+          -DDEMO3_GEN_WIRESHARK=ON -DDEMO3_BUILD_EXAMPLES=${{env.HAS_BOOST}}
       env:
         HAS_BOOST: "${{ matrix.arch == 'x64' && 'ON' || 'OFF' }}"
         BUILD_TOOLS: "${{ matrix.cpp >= 17 && matrix.arch == 'x64'  && 'ON' || 'OFF' }}"
